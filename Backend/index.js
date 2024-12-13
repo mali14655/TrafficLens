@@ -2,12 +2,16 @@ import express from "express"
 import { ConnectToMongoDb } from "./connect.js";
 import {userRouter} from "./routes/userRouter.js"
 import cors from "cors";
+import dotenv from "dotenv";
 
+
+dotenv.config();
 const app=express();
 const PORT=3000;
+const url=`mongodb+srv://mali146643:${process.env.PASSWORD}cluster0.jbbwg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 //Connection
-ConnectToMongoDb("mongodb://127.0.0.1:27017/ClickAnaly")
+ConnectToMongoDb(url)
 .then(()=>{
     console.log("Successfully Connected !")
 })
@@ -23,7 +27,9 @@ app.use(cors({
 }))
 
 
-
+app.get("/",(req,res)=>{
+    res.send("Succefully Done !");
+})
 app.use("/user",userRouter);
 
 
